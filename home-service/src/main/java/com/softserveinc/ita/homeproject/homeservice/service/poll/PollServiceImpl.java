@@ -360,9 +360,10 @@ public class PollServiceImpl implements PollService {
                     .multiply(new BigDecimal(100))
                     .divide(votedHouseArea, 10, RoundingMode.CEILING)
             ));
-
-            results.add(resultQuestionRepository.save(resultQuestion));
+            results.add(resultQuestion);
         }
+
+        resultQuestionRepository.saveAll(results);
 
         return results;
     }
@@ -387,8 +388,10 @@ public class PollServiceImpl implements PollService {
                     .divide(new BigDecimal(voteQuantity), 10, RoundingMode.CEILING)
             ));
 
-            results.add(resultQuestionRepository.save(resultQuestion));
+            results.add(resultQuestion);
         }
+
+        resultQuestionRepository.saveAll(results);
 
         return results;
     }
