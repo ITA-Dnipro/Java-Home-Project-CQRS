@@ -24,8 +24,12 @@
         <docker.image.postgres>postgres</docker.image.postgres>
         <docker.image.mongo>mongo</docker.image.mongo>
         <docker.image.mailhog>mailhog/mailhog</docker.image.mailhog>
+        <docker.image.zookeeper>confluentinc/cp-zookeeper</docker.image.zookeeper>
+        <docker.image.kafka>confluentinc/cp-kafka</docker.image.kafka>
         <docker.alias.data.migration>home-data-migration</docker.alias.data.migration>
         <docker.alias.application>home-application</docker.alias.application>
+        <docker.alias.zookeeper>zookeeper</docker.alias.zookeeper>
+        <docker.alias.kafka>kafka</docker.alias.kafka>
         <home.gateway.internal.port>8080</home.gateway.internal.port>
         <home.application.internal.port>8081</home.application.internal.port>
         <home.reader.internal.port>8099</home.reader.internal.port>
@@ -39,6 +43,8 @@
         <mail.host>mailhog</mail.host>
         <mail.port>1025</mail.port>
         <postgres.internal.port>5432</postgres.internal.port>
+        <zookeper.internal.port>2181</zookeper.internal.port>
+        <kafka.internal.port>9092</kafka.internal.port>
         <postgres.db>postgres</postgres.db>
         <mongo.db>mongodb</mongo.db>
         <postgres.url>jdbc:postgresql://${docker.image.postgres}:${postgres.internal.port}/${postgres.db}</postgres.url>
@@ -180,6 +186,8 @@
                                         <portName>postgres.external.port</portName>
                                         <portName>mongo.external.port</portName>
                                         <portName>mailhog.external.port</portName>
+                                        <portName>zookeper.external.port</portName>
+                                        <portName>kafka.external.port</portName>
                                     </portNames>
                                 </configuration>
                             </execution>
@@ -403,6 +411,71 @@
                                         </links>
                                         <wait>
                                             <log>Started HomeGatewayApplication</log>
+                                            <time>60000</time>
+                                        </wait>
+                                        <log>
+                                            <enabled>${api.tests.verbose.logging}</enabled>
+                                            <date>default</date>
+                                        </log>
+                                    </run>
+                                </image>
+                                <image>
+                                    <alias>${docker.alias.zookeeper}</alias>
+                                    <name>${docker.image.zookeeper}</name>
+                                    <build>
+                                        <from>${docker.image.zookeeper}</from>
+                                    </build>
+                                    <run>
+                                        <env>
+                                            <ZOOKEEPER_CLIENT_PORT>${zookeper.internal.port}</ZOOKEEPER_CLIENT_PORT>
+                                            <ZOOKEEPER_TICK_TIME>2000</ZOOKEEPER_TICK_TIME>
+                                        </env>
+                                        <ports>
+                                            <port>${zookeper.external.port}:${zookeper.internal.port}</port>
+                                        </ports>
+                                        <wait>
+                                            <log>Started AdminServer</log>
+                                            <time>60000</time>
+                                        </wait>
+                                        <log>
+                                            <enabled>${api.tests.verbose.logging}</enabled>
+                                            <date>default</date>
+                                        </log>
+                                    </run>
+                                </image>
+                                <image>
+                                    <alias>${docker.alias.kafka}</alias>
+                                    <name>${docker.image.kafka}</name>
+                                    <build>
+                                        <from>${docker.image.kafka}</from>
+                                    </build>
+                                    <run>
+                                        <env>
+                                            <KAFKA_BROKER_ID>1</KAFKA_BROKER_ID>
+                                            <KAFKA_ZOOKEEPER_CONNECT>
+                                                ${docker.alias.zookeeper}:${zookeper.internal.port}
+                                            </KAFKA_ZOOKEEPER_CONNECT>
+                                            <KAFKA_ADVERTISED_LISTENERS>
+                                                PLAINTEXT_HOST://localhost:${kafka.external.port}
+                                            </KAFKA_ADVERTISED_LISTENERS>
+                                            <KAFKA_LISTENER_SECURITY_PROTOCOL_MAP>
+                                                PLAINTEXT_HOST:PLAINTEXT
+                                            </KAFKA_LISTENER_SECURITY_PROTOCOL_MAP>
+                                            <KAFKA_INTER_BROKER_LISTENER_NAME>
+                                                PLAINTEXT_HOST
+                                            </KAFKA_INTER_BROKER_LISTENER_NAME>
+                                            <KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR>
+                                                1
+                                            </KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR>
+                                        </env>
+                                        <ports>
+                                            <port>${kafka.external.port}:${kafka.internal.port}</port>
+                                        </ports>
+                                        <links>
+                                            <link>${docker.alias.zookeeper}</link>
+                                        </links>
+                                        <wait>
+                                            <log>started \(kafka\.server\.KafkaServer\)</log>
                                             <time>60000</time>
                                         </wait>
                                         <log>
