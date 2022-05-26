@@ -335,6 +335,9 @@
                                             <JAVA_TOOL_OPTIONS>
                                                 -javaagent:/jacoco/${jacoco-agent-name}=port=${jacoco.agent.internal.port},append=true,output=tcpserver,address=*
                                             </JAVA_TOOL_OPTIONS>
+                                            <SPRING_KAFKA_BOOTSTRAP_SERVERS>
+                                                ${docker.alias.kafka}:${kafka.internal.port}
+                                            </SPRING_KAFKA_BOOTSTRAP_SERVERS>
                                             <MAIL_HOST>${mail.host}</MAIL_HOST>
                                             <MAIL_PORT>${mail.port}</MAIL_PORT>
                                         </env>
@@ -351,6 +354,7 @@
                                         <links>
                                             <link>${docker.image.postgres}</link>
                                             <link>${docker.image.mailhog}</link>
+                                            <link>${docker.alias.kafka}</link>
                                         </links>
                                         <dependsOn>
                                             <container>${docker.alias.data.migration}</container>
@@ -374,6 +378,9 @@
                                     <run>
                                         <env>
                                             <MONGO_URI>${mongo.uri}</MONGO_URI>
+                                            <SPRING_KAFKA_BOOTSTRAP_SERVERS>
+                                                ${docker.alias.kafka}:${kafka.internal.port}
+                                            </SPRING_KAFKA_BOOTSTRAP_SERVERS>
                                         </env>
                                         <ports>
                                             <port>${home.reader.external.port}:${home.reader.internal.port}
@@ -381,6 +388,7 @@
                                         </ports>
                                         <links>
                                             <link>${docker.image.mongo}</link>
+                                            <link>${docker.alias.kafka}</link>
                                         </links>
                                         <wait>
                                             <log>Started HomeReader</log>
@@ -456,10 +464,10 @@
                                                 ${docker.alias.zookeeper}:${zookeper.internal.port}
                                             </KAFKA_ZOOKEEPER_CONNECT>
                                             <KAFKA_ADVERTISED_LISTENERS>
-                                                PLAINTEXT_HOST://localhost:${kafka.external.port}
+                                                PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:${kafka.external.port}
                                             </KAFKA_ADVERTISED_LISTENERS>
                                             <KAFKA_LISTENER_SECURITY_PROTOCOL_MAP>
-                                                PLAINTEXT_HOST:PLAINTEXT
+                                                PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
                                             </KAFKA_LISTENER_SECURITY_PROTOCOL_MAP>
                                             <KAFKA_INTER_BROKER_LISTENER_NAME>
                                                 PLAINTEXT_HOST
