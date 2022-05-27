@@ -1,4 +1,4 @@
-package com.softserveinc.ita.homeproject.readerapp.models;
+package com.softserveinc.ita.homeproject.homereader.model;
 
 import java.time.LocalDateTime;
 
@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -14,7 +15,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document
-public class NewsReader extends BaseDocument {
+public class NewsReader{
+
+    @Id
+    private Long id;
 
     private LocalDateTime createDate;
 
