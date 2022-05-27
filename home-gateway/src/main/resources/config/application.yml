@@ -1,4 +1,8 @@
-home.application.url: http://localhost:8081
+home:
+  application.url: http://localhost:8081
+  reader.url: http://localhost:8099
+  gateway.customRoutes.reader:
+    - /users/**
 
 zuul:
   routes:
