@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Builder
 @Document
-public class UserReader extends BaseModel{
+public class UserReader extends BaseDocument {
 
     private String firstName;
 
