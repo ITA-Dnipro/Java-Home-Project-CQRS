@@ -17,11 +17,6 @@
 
         <!--Project dependencies-->
 
-        <dependency>
-            <groupId>com.softserveinc.ita.homeproject</groupId>
-            <artifactId>home-events</artifactId>
-        </dependency>
-
         <!--Spring dependencies-->
 
         <!--Other dependencies -->
@@ -33,7 +28,6 @@
 
     <build>
         <plugins>
-
         </plugins>
     </build>
 

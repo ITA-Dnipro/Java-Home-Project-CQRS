@@ -32,6 +32,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>com.softserveinc.ita.homeproject</groupId>
+            <artifactId>home-events</artifactId>
+        </dependency>
         <!--Spring dependencies-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
