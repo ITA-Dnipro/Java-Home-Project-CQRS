@@ -29,6 +29,10 @@
         </dependency>
         <dependency>
             <groupId>com.softserveinc.ita.homeproject</groupId>
+            <artifactId>home-events</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.softserveinc.ita.homeproject</groupId>
             <artifactId>home-service</artifactId>
         </dependency>
         <dependency>
