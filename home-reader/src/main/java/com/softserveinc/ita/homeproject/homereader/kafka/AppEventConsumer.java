@@ -1,4 +1,4 @@
-package com.softserveinc.ita.homeproject.readerapp.kafka;
+package com.softserveinc.ita.homeproject.homereader.kafka;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
