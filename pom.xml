@@ -12,6 +12,7 @@
 
     <modules>
         <module>home-data</module>
+        <module>home-events</module>
         <module>home-open-api</module>
         <module>home-service</module>
         <module>home-reader</module>
@@ -179,6 +180,11 @@
             <dependency>
                 <groupId>com.softserveinc.ita.homeproject</groupId>
                 <artifactId>home-data</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.softserveinc.ita.homeproject</groupId>
+                <artifactId>home-events</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
