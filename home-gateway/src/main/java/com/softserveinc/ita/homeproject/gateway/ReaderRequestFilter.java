@@ -83,8 +83,8 @@ public class ReaderRequestFilter extends ZuulFilter {
     private URL getUrl(String target) {
         try {
             return new URL(target);
-        } catch (MalformedURLException var3) {
-            throw new IllegalStateException("Target URL is malformed", var3);
+        } catch (MalformedURLException ex) {
+            throw new IllegalStateException("Target URL is malformed", ex);
         }
     }
 
