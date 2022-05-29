@@ -1,19 +1,15 @@
 package com.softserve.ita.homeproject.events;
 
-import java.time.LocalDateTime;
-
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
-public class NewsAddEvent extends AppEvent{
+@ToString
+public class NewsAddEvent extends AppEvent {
 
     private Long id;
-
-    private LocalDateTime createDate;
-
-    private LocalDateTime updateDate;
 
     private String title;
 
@@ -21,10 +17,22 @@ public class NewsAddEvent extends AppEvent{
 
     private String description;
 
-    private String photoUrl;
-
-    private String source;
-
     private Boolean enabled;
+
+    public NewsAddEvent(Long id, String title, String text, String description, Boolean enabled) {
+        this.id = id;
+        this.title = title;
+        this.text = text;
+        this.description = description;
+        this.enabled = enabled;
+    }
+
+    public NewsAddEvent() {
+    }
+
+    @Override
+    public EventType getEventType() {
+        return EventType.NEWS_ADD;
+    }
 
 }
