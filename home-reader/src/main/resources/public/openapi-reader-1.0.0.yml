@@ -32,3 +32,16 @@ paths:
       responses:
         "200":
           description: "OK"
+  /news:
+    get:
+      summary: "GET news"
+      operationId: "getAllNews"
+      responses:
+        "200":
+          description: "OK"
+    post:
+      summary: "POST news"
+      operationId: "createNews"
+      responses:
+        "200":
+          description: "OK"
