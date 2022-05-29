@@ -9,6 +9,8 @@ import lombok.Setter;
 @Setter
 public class NewsAddEvent extends AppEvent{
 
+    private Long id;
+
     private LocalDateTime createDate;
 
     private LocalDateTime updateDate;
