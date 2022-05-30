@@ -1,6 +1,5 @@
 package com.softserveinc.ita.homeproject.application.api;
 
-
 import static com.softserveinc.ita.homeproject.application.security.constants.Permissions.MANAGE_NEWS;
 import static com.softserveinc.ita.homeproject.application.security.constants.Permissions.READ_NEWS;
 
@@ -16,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
+
 
 /**
  * NewsApiServiceImpl class is the inter layer between generated

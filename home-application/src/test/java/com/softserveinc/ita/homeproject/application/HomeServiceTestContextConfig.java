@@ -7,11 +7,14 @@ import com.softserveinc.ita.homeproject.application.security.service.impl.HomeUs
 import com.softserveinc.ita.homeproject.application.security.filter.JWTProvider;
 import com.softserveinc.ita.homeproject.homedata.user.UserCooperationRepository;
 import com.softserveinc.ita.homeproject.homedata.user.UserRepository;
+import com.softserveinc.ita.homeproject.homeservice.events.NewsEventProducer;
 import com.softserveinc.ita.homeproject.homeservice.service.user.UserSessionService;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -40,6 +43,12 @@ public class HomeServiceTestContextConfig {
         dataSourceBuilder.username(env.getProperty("spring.datasource.username"));
         dataSourceBuilder.password(env.getProperty("spring.datasource.password"));
         return dataSourceBuilder.build();
+    }
+
+    @Bean
+    @Primary
+    public NewsEventProducer newsEventProducer() {
+        return Mockito.mock(NewsEventProducer.class);
     }
 
     @Bean
