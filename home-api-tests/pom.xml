@@ -414,6 +414,7 @@
                                             <HOME_READER_URL>
                                                 http://${docker.alias.reader}:${home.reader.internal.port}
                                             </HOME_READER_URL>
+                                            <HOME_GATEWAY_CQRS_ENABLED>false</HOME_GATEWAY_CQRS_ENABLED>
                                         </env>
                                         <ports>
                                             <port>${home.gateway.external.port}:${home.gateway.internal.port}</port>

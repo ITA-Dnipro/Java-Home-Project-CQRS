@@ -1,8 +1,12 @@
 home:
   application.url: http://localhost:8081
   reader.url: http://localhost:8099
-  gateway.customRoutes.reader:
-    - /users/**
+  gateway.customRoutes.routes:
+    homeReader:
+      route:
+        path: /api/0/news/**
+        url: ${home.reader.url}/news
+      method: GET
 
 zuul:
   routes:
