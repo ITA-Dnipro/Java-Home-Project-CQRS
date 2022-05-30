@@ -21,9 +21,13 @@ public class NewsEventProducer {
     public void sendAddEvent(News news) {
         NewsAddEvent newsAddEvent = new NewsAddEvent();
         newsAddEvent.setId(news.getId());
+        newsAddEvent.setCreateDate(news.getCreateDate());
+        newsAddEvent.setUpdateDate(news.getUpdateDate());
         newsAddEvent.setTitle(news.getTitle());
         newsAddEvent.setText(news.getText());
         newsAddEvent.setDescription(news.getDescription());
+        newsAddEvent.setPhotoUrl(news.getPhotoUrl());
+        newsAddEvent.setSource(news.getSource());
         newsAddEvent.setEnabled(news.getEnabled());
         kafkaProducer.sendEvent(newsAddEvent);
     }

@@ -19,9 +19,13 @@ public class NewsEventHandler {
             NewsAddEvent newsAddEvent = (NewsAddEvent) appEvent;
             NewsReader newsReader = new NewsReader();
             newsReader.setId(newsAddEvent.getId());
+            newsReader.setCreateDate(newsAddEvent.getCreateDate());
+            newsReader.setUpdateDate(newsAddEvent.getUpdateDate());
             newsReader.setTitle(newsAddEvent.getTitle());
             newsReader.setText(newsAddEvent.getText());
             newsReader.setDescription(newsAddEvent.getDescription());
+            newsReader.setPhotoUrl(newsAddEvent.getPhotoUrl());
+            newsReader.setSource(newsAddEvent.getSource());
             newsReader.setEnabled(newsAddEvent.getEnabled());
             newsReaderRepository.save(newsReader);
         }
