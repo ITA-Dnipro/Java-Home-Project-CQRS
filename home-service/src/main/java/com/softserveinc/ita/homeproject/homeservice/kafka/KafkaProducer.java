@@ -1,7 +1,6 @@
 package com.softserveinc.ita.homeproject.homeservice.kafka;
 
 import com.softserve.ita.homeproject.events.AppEvent;
-import com.softserve.ita.homeproject.events.NewsAddEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.kafka.core.KafkaTemplate;

@@ -1,13 +1,6 @@
 package com.softserveinc.ita.homeproject.application.api;
 
 
-import static com.softserveinc.ita.homeproject.application.security.constants.Permissions.MANAGE_NEWS;
-import static com.softserveinc.ita.homeproject.application.security.constants.Permissions.READ_NEWS;
-
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.Provider;
-
-import com.softserve.ita.homeproject.events.NewsAddEvent;
 import com.softserveinc.ita.homeproject.application.model.CreateNews;
 import com.softserveinc.ita.homeproject.application.model.ReadNews;
 import com.softserveinc.ita.homeproject.application.model.UpdateNews;
@@ -15,9 +8,14 @@ import com.softserveinc.ita.homeproject.homeservice.dto.general.news.NewsDto;
 import com.softserveinc.ita.homeproject.homeservice.service.general.news.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
+
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.Provider;
+
+import static com.softserveinc.ita.homeproject.application.security.constants.Permissions.MANAGE_NEWS;
+import static com.softserveinc.ita.homeproject.application.security.constants.Permissions.READ_NEWS;
 
 /**
  * NewsApiServiceImpl class is the inter layer between generated
