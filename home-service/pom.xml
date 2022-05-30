@@ -21,6 +21,10 @@
             <groupId>com.softserveinc.ita.homeproject</groupId>
             <artifactId>home-data</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.softserveinc.ita.homeproject</groupId>
+            <artifactId>home-events</artifactId>
+        </dependency>
 
         <!--Spring dependencies-->
 

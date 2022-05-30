@@ -2,9 +2,11 @@ package com.softserveinc.ita.homeproject.homeservice.service.general.news;
 
 import java.time.LocalDateTime;
 
+import com.softserve.ita.homeproject.events.NewsAddEvent;
 import com.softserveinc.ita.homeproject.homedata.general.news.News;
 import com.softserveinc.ita.homeproject.homedata.general.news.NewsRepository;
 import com.softserveinc.ita.homeproject.homeservice.dto.general.news.NewsDto;
+import com.softserveinc.ita.homeproject.homeservice.events.NewsEventProducer;
 import com.softserveinc.ita.homeproject.homeservice.exception.NotFoundHomeException;
 import com.softserveinc.ita.homeproject.homeservice.mapper.ServiceMapper;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,8 @@ public class NewsServiceImpl implements NewsService {
 
     private final ServiceMapper mapper;
 
+    private final NewsEventProducer newsEventProducer;
+
     @Override
     @Transactional
     public NewsDto create(NewsDto newsDto) {
@@ -34,7 +38,7 @@ public class NewsServiceImpl implements NewsService {
         news.setEnabled(true);
 
         newsRepository.save(news);
-
+        newsEventProducer.sendAddEvent(news);
         return mapper.convert(news, NewsDto.class);
     }
 

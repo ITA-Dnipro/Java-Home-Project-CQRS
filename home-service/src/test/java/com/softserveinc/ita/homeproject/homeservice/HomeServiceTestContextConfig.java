@@ -3,10 +3,14 @@ package com.softserveinc.ita.homeproject.homeservice;
 import java.util.Properties;
 import javax.sql.DataSource;
 
+import com.softserveinc.ita.homeproject.homeservice.events.NewsEventProducer;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -20,7 +24,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @ComponentScan(basePackages = {"com.softserveinc.ita.homeproject.homeservice",
-    "com.softserveinc.ita.homeproject.homedata"})
+        "com.softserveinc.ita.homeproject.homedata"})
 @EnableJpaRepositories("com.softserveinc.ita.homeproject.homedata")
 @PropertySource("/application-home-service-test.properties")
 public class HomeServiceTestContextConfig {
@@ -38,13 +42,19 @@ public class HomeServiceTestContextConfig {
     }
 
     @Bean
+    @Primary
+    public NewsEventProducer newsEventProducer() {
+        return Mockito.mock(NewsEventProducer.class);
+    }
+
+    @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean em
-            = new LocalContainerEntityManagerFactoryBean();
+                = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setPackagesToScan("com.softserveinc.ita.homeproject.homeservice",
-            "com.softserveinc.ita.homeproject.homedata");
+                "com.softserveinc.ita.homeproject.homedata");
         em.setJpaProperties(addProperties());
         return em;
     }
