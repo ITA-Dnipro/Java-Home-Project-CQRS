@@ -6,6 +6,7 @@ import com.softserve.ita.homeproject.events.NewsAddEvent;
 import com.softserveinc.ita.homeproject.homereader.model.NewsReader;
 import com.softserveinc.ita.homeproject.homereader.repositories.NewsReaderRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,21 +15,14 @@ public class NewsEventHandler {
 
     private final NewsReaderRepository newsReaderRepository;
 
+    private final ModelMapper modelMapper = new ModelMapper();
+
     public void handleEvent(AppEvent appEvent) {
+        NewsReader newsReader = modelMapper.map(appEvent, NewsReader.class);
         if (appEvent.getEventType() == EventType.NEWS_ADD) {
-            NewsAddEvent newsAddEvent = (NewsAddEvent) appEvent;
-            NewsReader newsReader = new NewsReader();
-            newsReader.setId(newsAddEvent.getId());
-            newsReader.setCreateDate(newsAddEvent.getCreateDate());
-            newsReader.setUpdateDate(newsAddEvent.getUpdateDate());
-            newsReader.setTitle(newsAddEvent.getTitle());
-            newsReader.setText(newsAddEvent.getText());
-            newsReader.setDescription(newsAddEvent.getDescription());
-            newsReader.setPhotoUrl(newsAddEvent.getPhotoUrl());
-            newsReader.setSource(newsAddEvent.getSource());
-            newsReader.setEnabled(newsAddEvent.getEnabled());
             newsReaderRepository.save(newsReader);
+        } else if(appEvent.getEventType() == EventType.NEWS_DELETE){
+            newsReaderRepository.deleteById(newsReader.getId());
         }
     }
-
 }
