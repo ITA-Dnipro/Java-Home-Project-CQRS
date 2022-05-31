@@ -74,6 +74,7 @@ services:
     image: homebayraktar/home-gateway
     environment:
       HOME_APPLICATION_URL: http://home-application:8081
+      HOME_READER_URL: http://home-reader:8099
     ports:
       - 8080:8080
     networks:
