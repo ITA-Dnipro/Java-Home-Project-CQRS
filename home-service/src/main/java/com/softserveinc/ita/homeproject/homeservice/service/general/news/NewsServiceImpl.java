@@ -86,6 +86,6 @@ public class NewsServiceImpl implements NewsService {
             .orElseThrow(() -> new NotFoundHomeException(String.format(FORMAT, NOT_FOUND_NEWS, id)));
         toDelete.setEnabled(false);
         newsRepository.save(toDelete);
+        newsEventProducer.sendDeleteEvent(toDelete);
     }
-
 }
