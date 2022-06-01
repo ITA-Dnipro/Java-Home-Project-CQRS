@@ -1,0 +1,15 @@
+{
+  "registration_token": "f8e20775-da55-11eb-a58d-775374b8f3a1",
+  "first_name": "Petro",
+  "middle_name": "Petrovich",
+  "last_name": "Zinchenko",
+  "email": "testadmin@gmail.com",
+  "password": "mySuperStrongPass",
+  "contacts": [
+    {
+      "type": "email",
+      "main": false,
+      "email": "createUserEmail@example.com"
+    }
+  ]
+}

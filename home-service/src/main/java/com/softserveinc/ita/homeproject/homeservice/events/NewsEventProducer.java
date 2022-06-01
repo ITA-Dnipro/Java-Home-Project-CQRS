@@ -28,7 +28,7 @@ public class NewsEventProducer {
     }
 
     public void sendDeleteEvent(News news) {
-        NewsDeleteEvent newsDeleteEvent = modelMapper.map(news, NewsDeleteEvent.class);
+        NewsDeleteEvent newsDeleteEvent = new NewsDeleteEvent(news.getId());
         kafkaProducer.sendEvent(newsDeleteEvent);
     }
 }

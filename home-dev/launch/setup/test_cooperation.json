@@ -1,0 +1,43 @@
+{
+  "name": "Home Association",
+  "usreo": "12345678",
+  "iban": "UA213223130000026007233566001",
+  "admin_email": "testadmin@gmail.com",
+  "address": {
+    "region": "Dnipropetrovsk region",
+    "city": "Dnipro",
+    "district": "Zavodskoy",
+    "street": "Kirova",
+    "house_block": "2/B",
+    "house_number": "23-B",
+    "zip_code": "52956"
+  },
+  "houses": [
+    {
+      "quantity_flat": 96,
+      "house_area": 4348.8,
+      "adjoining_area": 400,
+      "address": {
+        "region": "Dnipro",
+        "city": "Dnepr",
+        "district": "District",
+        "street": "street",
+        "house_block": "block",
+        "house_number": "number",
+        "zip_code": "zipCode"
+      }
+    }
+  ],
+  "contacts": [
+    {
+      "type": "email",
+      "email": "createUserEmail@example.com",
+      "main": false
+    },
+    {
+      "type": "phone",
+      "phone": "+380506617305",
+      "main": false
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "title": "CQRS Bayraktar: event producer/handler",
+  "photo_url": "https://miro.medium.com/max/2400/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
+  "description": "This change adds event producer/handler for NEWS ADD event, so that new items appear in both Postgres and Mongo",
+  "source": "https://github.com/ITA-Dnipro/Java-Home-Project-CQRS-Bayraktar/commit/51346cedcc2ed05149613f1b486bf9c81d195602",
+  "text": "Merged feature branch issue#28_Event_producer_for_writer into dev",
+  "enabled": true
+}

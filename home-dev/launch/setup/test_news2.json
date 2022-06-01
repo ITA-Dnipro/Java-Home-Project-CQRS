@@ -1,0 +1,8 @@
+{
+  "title": "CQRS Bayraktar: gateway GET /news forwarding",
+  "photo_url": "https://miro.medium.com/max/2400/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
+  "description": "This change adds lacking functionality to Zuul Gateway - forwarding by GET method",
+  "source": "https://github.com/ITA-Dnipro/Java-Home-Project-CQRS-Bayraktar/commit/1e3a5533f5c477e1df8a514f2ea765822d43d07e",
+  "text": "Merged feature branch issue#26_Gateway_GET into dev",
+  "enabled": true
+}
