@@ -10,7 +10,7 @@ public class KafkaConfig {
 
     @Bean
     public NewTopic topicHome() {
-        return TopicBuilder.name("home")
+        return TopicBuilder.name("7287f0bv-home")
                 .partitions(1)
                 .replicas(1)
                 .build();

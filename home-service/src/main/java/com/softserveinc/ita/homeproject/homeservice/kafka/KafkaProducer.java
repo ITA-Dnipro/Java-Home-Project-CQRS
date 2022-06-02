@@ -18,6 +18,6 @@ public class KafkaProducer {
     }
 
     public void sendEvent(AppEvent event) {
-        kafkaTemplate.send("home", event);
+        kafkaTemplate.send("7287f0bv-home", event);
     }
 }

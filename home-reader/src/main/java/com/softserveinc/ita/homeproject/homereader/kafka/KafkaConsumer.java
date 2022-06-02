@@ -12,7 +12,7 @@ public class KafkaConsumer {
 
     private final NewsEventHandler newsEventHandler;
 
-    @KafkaListener(topics = "home")
+    @KafkaListener(topics = "7287f0bv-home")
     public void handleEvent(AppEvent appEvent) {
         newsEventHandler.handleEvent(appEvent);
     }
