@@ -1,0 +1,136 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5433:5432
+    networks:
+      - home_network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  home-data-migration:
+    depends_on:
+      postgres:
+        condition: service_healthy
+    image: homebayraktar/data-migration
+    environment:
+      DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres?user=postgres&password=password
+    ports:
+      - 5001:5001
+    networks:
+      - home_network
+
+  home-application:
+    image: homebayraktar/home-application
+    depends_on:
+      home-data-migration:
+        condition: service_completed_successfully
+      kafka:
+        condition: service_started
+    environment:
+      DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      # speed up cron jobs for faster responses during tests
+      HOME_JOBS_SENDAPARTMENTEMAIL_CRON: "* * * * * ?"
+      HOME_JOBS_SENDCOOPERATIONEMAIL_CRON: "* * * * * ?"
+      MAIL_HOST: mailhog
+      MAIL_PORT: 1025
+    ports:
+      - 8081:8081
+    networks:
+      - home_network
+
+  home-reader:
+    image: homebayraktar/home-reader
+    depends_on:
+      - mongodb
+      - kafka
+    environment:
+      MONGO_URI: mongodb://mongodb:27017/mongodb
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    ports:
+      - 8099:8099
+    networks:
+      - home_network
+
+  home-oauth-server:
+    image: homebayraktar/home-oauth-server
+    depends_on:
+      home-data-migration:
+        condition: service_completed_successfully
+    environment:
+      DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+    ports:
+      - 9000:9000
+    networks:
+      - home_network
+
+  home-gateway:
+    image: homebayraktar/home-gateway
+    environment:
+      HOME_APPLICATION_URL: http://home-application:8081
+      HOME_READER_URL: http://home-reader:8099
+      # disable CQRS because API tests don't consider time for reader-writer synchronization
+      HOME_GATEWAY_CQRS_ENABLED: false
+    ports:
+      - 8080:8080
+    networks:
+      - home_network
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui
+    networks:
+      - home_network
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - home_network
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 22181:2181
+    networks:
+      - home_network
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - 29092:29092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - home_network
+
+networks:
+  home_network:
+    external: false
+    name: home_network
+    driver: bridge
