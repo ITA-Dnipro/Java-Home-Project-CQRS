@@ -36,6 +36,8 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: heroku
       DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+      # CLOUDKAFKA_USER: <user>
+      # CLOUDKAFKA_PASSWORD: <password>
       MAIL_HOST: mailhog
       MAIL_PORT: 1025
     ports:
@@ -49,6 +51,8 @@ services:
       - mongodb
     environment:
       SPRING_PROFILES_ACTIVE: heroku
+      # CLOUDKAFKA_USER: <user>
+      # CLOUDKAFKA_PASSWORD: <password>
       MONGO_URI: mongodb://mongodb:27017/mongodb
     ports:
       - 8099:8099
