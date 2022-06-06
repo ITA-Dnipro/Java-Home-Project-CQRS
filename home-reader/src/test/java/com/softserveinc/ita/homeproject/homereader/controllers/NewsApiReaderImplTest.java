@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -44,13 +46,14 @@ class NewsApiReaderImplTest {
         news.setTitle("Title");
         news.setDescription("Description");
 
-        when(service.findAll()).thenReturn(List.of(news));
+        Sort sorting = Sort.by(Sort.Direction.ASC, "id");
+        when(service.findAll(null, PageRequest.of(0, 5, sorting))).thenReturn(List.of(news));
 
         mockMvc.perform(get("http://localhost:8099/news")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        verify(service, times(1)).findAll();
+        verify(service, times(1)).findAll(null, PageRequest.of(0, 5, sorting));
         verifyNoMoreInteractions(service);
     }
 
