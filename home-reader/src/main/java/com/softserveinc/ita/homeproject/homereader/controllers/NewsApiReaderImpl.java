@@ -1,17 +1,12 @@
 package com.softserveinc.ita.homeproject.homereader.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.mongodb.morphia.MorphiaQuery;
 import com.softserveinc.ita.homeproject.homereader.api.NewsApi;
-import com.softserveinc.ita.homeproject.homereader.model.NewsReader;
 import com.softserveinc.ita.homeproject.homereader.model.QNewsReader;
 import com.softserveinc.ita.homeproject.homereader.model.ReadNews;
-import com.softserveinc.ita.homeproject.homereader.repositories.NewsReaderRepository;
 import com.softserveinc.ita.homeproject.homereader.service.NewsReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
